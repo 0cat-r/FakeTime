@@ -1,0 +1,31 @@
+version: 2
+
+before:
+  hooks:
+    - go install mvdan.cc/garble@latest
+    - go mod download
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+      - GARBLE_LINK_TINY=true
+      - GARBLE_SEED=random
+      - GARBLE_DEBUGDIR=garble_out
+    goos:
+      - windows
+    goarch:
+      - amd64
+      - 386
+    gobinary: "garble"
+    ldflags: "-s -w"
+    flags: "-a -trimpath"
+    binary: '{{ .ProjectName }}'
+    main: ./main.go
+
+archives:
+  - format: zip
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ if eq .Os "darwin" }}macOS{{ else }}{{ .Os }}{{ end }}_{{ .Arch }}'
+
+checksum:
+  algorithm: sha256

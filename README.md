@@ -20,3 +20,7 @@ FakeTime.exe -f dir/ -t "2016-03-12 12:00:00" -r 30
 //修改11.exe的时间，并且修改编译时间
 
 FakeTime.exe -f 11.exe -t "2016-03-12 12:00:00" -r 30 -pe
+
+
+
+小工具 只支持windows amd64 和386
